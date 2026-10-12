@@ -23,7 +23,29 @@ The rules of the vault are in its own `README.md`. The definition of every recor
    Last one → `state: finished` (never delete the note).
 4. Check the *Needs attention* table in `_views/Inventory.base`.
 
-## Weekly (the maintainer, ~5 minutes)
+## Where things live
+
+| What | Where | Visibility |
+|---|---|---|
+| Lab vault (the data) | `github.com/peginatta/lab-vault` | private — invite lab members as collaborators |
+| `labbase` tool + example vault | `github.com/peginatta/labbase` | public (MIT licence) |
+
+## Automatic checks (nobody has to run anything)
+
+The vault repository contains `.github/workflows/labbase.yml`. GitHub runs it after every sync,
+every morning at 05:00 UTC, and on demand (*Actions* tab → *labbase* → *Run workflow*). It assigns
+missing IDs, redraws box maps, rewrites `_reports/check.md` and commits that as "labbase bot".
+If the vault has errors, the run is marked failed and GitHub emails the repository owner.
+
+**Upgrading the tool:** the workflow installs a pinned version (`LABBASE: …@v0.1.0`). After a new
+version of `labbase` is released (a git tag such as `v0.2.0`), change that one line and sync.
+Pinning means a change in the tool can never break the vault's check by surprise.
+
+**Cost:** private repositories get 2,000 free Action minutes per month on a free GitHub account;
+each run takes about a minute. If the lab syncs very often, set Obsidian Git's sync interval to
+10–15 minutes.
+
+## Weekly (optional — the automatic check already does this)
 
 ```bash
 cd path/to/lab-vault
