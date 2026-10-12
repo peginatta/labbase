@@ -32,8 +32,9 @@ The rules of the vault are in its own `README.md`. The definition of every recor
 
 ## Automatic checks (nobody has to run anything)
 
-The vault repository contains `.github/workflows/labbase.yml`. GitHub runs it after every sync,
-every morning at 05:00 UTC, and on demand (*Actions* tab → *labbase* → *Run workflow*). It assigns
+The vault repository contains `.github/workflows/labbase.yml`. GitHub runs it every hour on
+weekdays (05–19 UTC), once a day at weekends, and on demand (*Actions* tab → *labbase* →
+*Run workflow*). It assigns
 missing IDs, redraws box maps, rewrites `_reports/check.md` and commits that as "labbase bot".
 If the vault has errors, the run is marked failed and GitHub emails the repository owner.
 
@@ -42,8 +43,12 @@ version of `labbase` is released (a git tag such as `v0.2.0`), change that one l
 Pinning means a change in the tool can never break the vault's check by surprise.
 
 **Cost:** private repositories get 2,000 free Action minutes per month on a free GitHub account;
-each run takes about a minute. If the lab syncs very often, set Obsidian Git's sync interval to
-10–15 minutes.
+each run takes about a minute, so the hourly schedule uses ~300 minutes/month however often
+people sync. (Running on every sync would not scale — that is why it is scheduled.)
+
+**Obsidian "Git" plugin (by Vinzent) settings for every lab computer:** auto commit-and-sync
+interval 5 min with "after stopping file edits" on; auto pull interval 5 min; pull on startup on;
+pull on commit-and-sync on; push on commit-and-sync on.
 
 ## Weekly (optional — the automatic check already does this)
 
