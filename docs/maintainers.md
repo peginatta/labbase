@@ -46,7 +46,9 @@ Pinning means a change in the tool can never break the vault's check by surprise
 each run takes about a minute, so the hourly schedule uses ~300 minutes/month however often
 people sync. (Running on every sync would not scale — that is why it is scheduled.)
 
-**Obsidian "Git" plugin (by Vinzent) settings for every lab computer:** auto commit-and-sync
+**Obsidian "Git" plugin (by Vinzent)** is stored in the vault (`.obsidian/plugins/obsidian-git/`,
+with its settings), so a new lab member only clones the vault, opens it and trusts its plugins.
+Changing a plugin setting on one computer changes it for everyone. The lab settings are: auto commit-and-sync
 interval 5 min with "after stopping file edits" on; auto pull interval 5 min; pull on startup on;
 pull on commit-and-sync on; push on commit-and-sync on.
 
