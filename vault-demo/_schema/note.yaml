@@ -1,0 +1,19 @@
+type: note
+id_prefix: EXP
+folder: Notebook
+description: A notebook entry (experiment, observation, plan).
+fields:
+  date:
+    kind: date
+    required: true
+  author:
+    kind: text
+    required: true
+  status:
+    kind: choice
+    options: [draft, submitted, signed]
+    default: draft
+  reviewed_by:
+    kind: text
+  project:
+    kind: text

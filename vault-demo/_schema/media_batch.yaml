@@ -1,0 +1,44 @@
+type: media_batch
+id_prefix: MED
+folder: Media
+description: One preparation of a media recipe. Its bottles are a `stock` note (content = this batch).
+body: |
+  ## Stocks
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - content == this
+      - state != "finished"
+  views:
+    - type: table
+      name: Stocks of this
+      order:
+        - file.name
+        - box
+        - location
+        - positions
+        - vials_left
+        - expiry
+  ```
+fields:
+  recipe:
+    kind: link
+    to: [media_recipe]
+    required: true
+  prepared_on:
+    kind: date
+    required: true
+  prepared_by:
+    kind: text
+  volume_mL:
+    kind: number
+  expiry:
+    kind: date
+  lots:
+    kind: list
+    of: text
+    help: Lots of the components used, e.g. "FBS 2F114".
+  sterility:
+    kind: choice
+    options: [pending, passed, failed]

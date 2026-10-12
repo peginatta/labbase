@@ -1,0 +1,16 @@
+filters:
+  and:
+    - type == "compound"
+views:
+  - type: table
+    name: All compounds
+    order:
+      - file.name
+      - code
+      - series
+      - reference
+      - mw_g_mol
+      - cas
+    groupBy:
+      property: series
+      direction: ASC

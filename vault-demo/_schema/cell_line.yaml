@@ -1,0 +1,53 @@
+type: cell_line
+id_prefix: CEL
+folder: Cell lines
+description: Host cells — a cell line (THP-1, RAW 264.7) or primary cells (BMDM).
+body: |
+  ## Stocks
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - content == this
+      - state != "finished"
+  views:
+    - type: table
+      name: Stocks of this
+      order:
+        - file.name
+        - box
+        - location
+        - positions
+        - vials_left
+        - expiry
+  ```
+fields:
+  species:
+    kind: text
+    required: true
+  ncbi_taxon:
+    kind: integer
+  kind:
+    kind: choice
+    options: [line, primary]
+    required: true
+  cell_type:
+    kind: text
+  source:
+    kind: text
+    help: ATCC number or "own isolation".
+  cellosaurus:
+    kind: text
+    help: Cellosaurus accession (CVCL_…) for cell lines.
+  host_strain:
+    kind: text
+    help: Mouse strain for primary cells, e.g. BALB/c.
+  medium:
+    kind: link
+    to: [media_recipe]
+  differentiation:
+    kind: text
+  passage_limit:
+    kind: integer
+  biosafety_level:
+    kind: text

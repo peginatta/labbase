@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+vault-demo/_reports/
+vault-demo/.obsidian/workspace*.json
+vault-demo/.obsidian/cache
+vault-demo/.trash/

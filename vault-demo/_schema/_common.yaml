@@ -1,0 +1,21 @@
+# Fields every note may have, whatever its type.
+description: Fields shared by all record types.
+fields:
+  id:
+    kind: id
+    help: Stable ID like CEL-0001. Leave empty when creating a note; `labbase fill-ids` fills it.
+  type:
+    kind: text
+    required: true
+    help: The record type (matches a file in _schema/).
+  aliases:
+    kind: list
+    of: text
+    help: Other names, abbreviations, old Excel names (e.g. THP1, MF, anfotericina B).
+  tags:
+    kind: list
+    of: text
+  created:
+    kind: date
+  created_by:
+    kind: text

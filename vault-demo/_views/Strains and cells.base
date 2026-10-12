@@ -1,0 +1,18 @@
+filters:
+  or:
+    - type == "strain"
+    - type == "cell_line"
+views:
+  - type: table
+    name: Strains and host cells
+    order:
+      - file.name
+      - type
+      - species
+      - who_code
+      - source
+      - reporter
+      - passage_limit
+    groupBy:
+      property: type
+      direction: ASC

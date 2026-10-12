@@ -1,0 +1,15 @@
+---
+id: STK-0007
+type: stock
+content: "[[LB-A-001]]"
+box: "[[Series A 2 box]]"
+positions: [A1]
+vials_left: 1
+container: tube
+conc_mM: 10
+solvent: DMSO
+volume_uL: 50
+---
+# LB-A-001 10 mM backup
+
+Example data — replace with the real records.

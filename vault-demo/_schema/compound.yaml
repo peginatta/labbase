@@ -1,0 +1,48 @@
+type: compound
+id_prefix: CMP
+folder: Compounds
+description: A chemical entity (reference drug, series compound). Physical stocks are `stock` notes.
+body: |
+  ## Stocks
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - content == this
+      - state != "finished"
+  views:
+    - type: table
+      name: Stocks of this
+      order:
+        - file.name
+        - box
+        - location
+        - positions
+        - vials_left
+        - expiry
+  ```
+fields:
+  code:
+    kind: text
+    help: Lab code, e.g. LB-A-012.
+  series:
+    kind: text
+  reference:
+    kind: boolean
+    help: True for reference drugs (miltefosine, amphotericin B…).
+  smiles:
+    kind: text
+  formula:
+    kind: text
+  mw_g_mol:
+    kind: number
+    help: Molecular weight of the form actually weighed (salt included).
+  salt_form:
+    kind: text
+  cas:
+    kind: text
+  pubchem_cid:
+    kind: integer
+  source:
+    kind: text
+    help: Supplier, chemist or collaborator.

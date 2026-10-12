@@ -1,0 +1,17 @@
+type: media_recipe
+id_prefix: RCP
+folder: Media
+description: How to make a medium, e.g. "RPMI-1640 complete".
+fields:
+  base:
+    kind: link
+    to: [item]
+    help: The base medium bottle (item).
+  components:
+    kind: list
+    of: text
+    help: One line per component with amount, e.g. "[[FBS]] 10 %".
+  shelf_life_days:
+    kind: integer
+  storage_C:
+    kind: number

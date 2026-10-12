@@ -1,0 +1,21 @@
+filters:
+  and:
+    - type == "note"
+views:
+  - type: table
+    name: Notebook
+    order:
+      - date
+      - file.name
+      - author
+      - status
+      - reviewed_by
+  - type: table
+    name: Waiting for review
+    filters:
+      and:
+        - status == "submitted"
+    order:
+      - date
+      - file.name
+      - author

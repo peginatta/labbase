@@ -1,0 +1,53 @@
+filters:
+  and:
+    - type == "stock"
+formulas:
+  status: 'if(state == "finished" || vials_left == 0, "OUT", if(expiry && expiry < today(), "EXPIRED", if(state == "low", "LOW", if(last_checked && last_checked < today() - "30d", "STALE", "OK"))))'
+properties:
+  formula.status:
+    displayName: Status
+  vials_left:
+    displayName: Left
+views:
+  - type: table
+    name: Everything in stock
+    filters:
+      and:
+        - state != "finished"
+    order:
+      - file.name
+      - content
+      - box
+      - location
+      - positions
+      - vials_left
+      - expiry
+      - formula.status
+    groupBy:
+      property: content
+      direction: ASC
+  - type: table
+    name: Needs attention
+    filters:
+      and:
+        - formula.status != "OK"
+        - formula.status != "OUT"
+    order:
+      - formula.status
+      - file.name
+      - box
+      - location
+      - expiry
+      - last_checked
+  - type: table
+    name: Expiring within 30 days
+    filters:
+      and:
+        - expiry
+        - expiry < today() + "30d"
+        - state != "finished"
+    order:
+      - expiry
+      - file.name
+      - location
+      - box

@@ -1,0 +1,9 @@
+type: supplier
+id_prefix: SUP
+folder: Suppliers
+description: A company or collaborator things come from.
+fields:
+  website:
+    kind: text
+  contact:
+    kind: text

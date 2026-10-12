@@ -1,0 +1,45 @@
+type: item
+id_prefix: ITM
+folder: Items
+description: Something bought (medium, buffer, serum, antibiotic, solvent, consumable). Bottles/boxes of it are `stock` notes.
+body: |
+  ## Stocks
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - content == this
+      - state != "finished"
+  views:
+    - type: table
+      name: Stocks of this
+      order:
+        - file.name
+        - box
+        - location
+        - positions
+        - vials_left
+        - expiry
+  ```
+fields:
+  category:
+    kind: choice
+    options: [medium, buffer, serum, antibiotic, solvent, reagent, kit, consumable, other]
+  supplier:
+    kind: link
+    to: [supplier]
+  catalog_no:
+    kind: text
+  unit:
+    kind: text
+  tracking:
+    kind: choice
+    options: [counted, confirmed]
+    help: counted = keep amounts up to date; confirmed = just say ok / low / finished.
+  reorder_at:
+    kind: number
+    help: Reorder when the total left (in `unit`) is at or below this.
+  storage_C:
+    kind: number
+  hazards:
+    kind: text

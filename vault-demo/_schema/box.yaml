@@ -1,0 +1,44 @@
+type: box
+id_prefix: BOX
+folder: Locations
+description: A storage box with a grid of positions (A1 … I9 for 9×9).
+body: |
+  ## In this box
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - box == this
+      - state != "finished"
+  views:
+    - type: table
+      name: In this box
+      order:
+        - file.name
+        - content
+        - positions
+        - vials_left
+        - passage
+        - frozen_on
+        - expiry
+  ```
+fields:
+  parent:
+    kind: link
+    to: [location]
+    required: true
+  slot:
+    kind: text
+  rows:
+    kind: integer
+    min: 1
+    max: 26
+    default: 9
+  cols:
+    kind: integer
+    min: 1
+    max: 99
+    default: 9
+  temperature_C:
+    kind: number
+    help: Leave empty to use the freezer's temperature.

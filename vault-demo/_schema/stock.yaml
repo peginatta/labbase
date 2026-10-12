@@ -1,0 +1,74 @@
+type: stock
+id_prefix: STK
+folder: Stocks
+description: >
+  One batch of physical containers made or received together — a freezing (e.g. "THP-1 p8,
+  frozen 2026-01-15 by Marc", 5 cryovials), a set of compound aliquots, or bottles of one lot.
+fields:
+  content:
+    kind: link
+    to: [compound, strain, cell_line, item, media_batch]
+    required: true
+    help: What is inside.
+  box:
+    kind: link
+    to: [box]
+    help: For things in a box. Use `positions` too.
+  location:
+    kind: link
+    to: [location]
+    help: For things not in a box (e.g. bottles on a fridge shelf).
+  positions:
+    kind: list
+    of: position
+    help: Box positions still holding this stock, e.g. [A1, A2]. Remove a position when a vial is used.
+  vials_left:
+    kind: integer
+    min: 0
+    help: Number of vials/tubes/bottles left. Must match `positions` when in a box.
+  container:
+    kind: choice
+    options: [cryovial, tube, bottle, flask, bag, plate, other]
+  state:
+    kind: choice
+    options: [ok, low, finished]
+    help: What you observed. Set "finished" when the last one is used (keep the note — it is history).
+  last_checked:
+    kind: date
+    help: Last time someone confirmed it is really there. STALE after 30 days.
+  lot:
+    kind: text
+  received_on:
+    kind: date
+  opened_on:
+    kind: date
+  expiry:
+    kind: date
+  # cells / parasites
+  passage:
+    kind: integer
+    help: Passage number at freezing.
+  frozen_on:
+    kind: date
+  frozen_by:
+    kind: text
+  cells_per_vial:
+    kind: number
+  freezing_medium:
+    kind: text
+  # solutions / compounds
+  conc_mM:
+    kind: number
+  conc_mg_mL:
+    kind: number
+  solvent:
+    kind: text
+  volume_uL:
+    kind: number
+    help: Volume per tube.
+  volume_mL:
+    kind: number
+    help: Volume per bottle.
+  freeze_thaw:
+    kind: integer
+    min: 0

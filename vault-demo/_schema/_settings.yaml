@@ -1,0 +1,5 @@
+# Lab-wide settings used by `labbase check` (defaults agreed 2026-10-11).
+stale_days: 30            # STALE when last_checked is older than this
+expiry_warning_days: 30   # warn this many days before expiry
+autolock_days: 7          # notebook drafts: remind after this many days
+review_steps: [author, peer]

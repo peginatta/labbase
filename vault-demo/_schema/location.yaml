@@ -1,0 +1,18 @@
+type: location
+id_prefix: LOC
+folder: Locations
+description: A place things are stored — room, freezer, fridge, shelf, rack. Boxes have their own type.
+fields:
+  kind:
+    kind: choice
+    options: [site, room, freezer, fridge, incubator, cabinet, shelf, rack]
+    required: true
+  parent:
+    kind: link
+    to: [location]
+    help: Where this location is (e.g. a shelf's freezer). Empty for the top (the lab).
+  slot:
+    kind: text
+    help: Position inside the parent, e.g. shelf "2".
+  temperature_C:
+    kind: number

@@ -1,0 +1,50 @@
+type: strain
+id_prefix: STR
+folder: Strains
+description: A parasite strain or line (e.g. L. infantum JPCM5, a luciferase reporter line).
+body: |
+  ## Stocks
+  ```base
+  filters:
+    and:
+      - type == "stock"
+      - content == this
+      - state != "finished"
+  views:
+    - type: table
+      name: Stocks of this
+      order:
+        - file.name
+        - box
+        - location
+        - positions
+        - vials_left
+        - expiry
+  ```
+fields:
+  species:
+    kind: text
+    required: true
+  ncbi_taxon:
+    kind: integer
+    help: NCBI Taxonomy ID of the species (makes the record understandable outside the lab).
+  who_code:
+    kind: text
+    help: WHO international code, e.g. MCAN/ES/98/LLM-877.
+  parent:
+    kind: link
+    to: [strain]
+    help: The strain this one was derived from.
+  reporter:
+    kind: text
+  markers:
+    kind: text
+    help: Selection markers / drugs, e.g. G418.
+  plasmid:
+    kind: text
+  passage_limit:
+    kind: integer
+  origin:
+    kind: text
+  biosafety_level:
+    kind: text

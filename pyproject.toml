@@ -1,0 +1,38 @@
+[project]
+name = "labbase"
+version = "0.1.0"
+description = "Tools for a files-first lab vault (Obsidian Markdown notes): check, IDs, templates, box maps"
+authors = [
+    { name = "peginatta", email = "35983950+peginatta@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "ruamel-yaml>=0.19.1",
+    "typer>=0.27.3",
+]
+
+[project.scripts]
+labbase = "labbase.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.17.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
