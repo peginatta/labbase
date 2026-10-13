@@ -38,7 +38,7 @@ weekdays (05–19 UTC), once a day at weekends, and on demand (*Actions* tab →
 missing IDs, redraws box maps, rewrites `_reports/check.md` and commits that as "labbase bot".
 If the vault has errors, the run is marked failed and GitHub emails the repository owner.
 
-**Upgrading the tool:** the workflow installs a pinned version (`LABBASE: …@v0.1.0`). After a new
+**Upgrading the tool:** the workflow installs a pinned version (`LABBASE: …@vX.Y.Z`). After a new
 version of `labbase` is released (a git tag such as `v0.2.0`), change that one line and sync.
 Pinning means a change in the tool can never break the vault's check by surprise.
 
