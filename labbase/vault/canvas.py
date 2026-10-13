@@ -153,68 +153,41 @@ def box_summary(box: Note, max_lines: int = 3, width: int = 60) -> list[str]:
 COL_W, CARD_H, BOX_H, GAP, PAD, HEAD = 300, 60, 40, 30, 20, 60
 
 
-def _column(tree: Tree, freezer: Note, x: int, y: int) -> tuple[list[dict], int]:
-    """A freezer column: freezer card, then a group per tower/shelf with its boxes."""
-    nodes = [
-        _text(
-            freezer.rel, x, y, COL_W, CARD_H, f"### {_link(freezer, freezer.name)}", _color(freezer)
-        )
-    ]
-    cy = y + CARD_H + GAP
-    for label, holder, boxes in sections(tree, freezer):
-        inner_h = HEAD + len(boxes) * (BOX_H + 6) + PAD if boxes else HEAD + PAD
-        label = label or "boxes (directly in the freezer)"
-        nodes.insert(
-            0, _group(f"{freezer.rel}>{holder.rel if holder else ''}", x, cy, COL_W, inner_h, label)
-        )
-        if holder is not None:
-            nodes.append(
-                _text(
-                    holder.rel,
-                    x + PAD,
-                    cy + 15,
-                    COL_W - 2 * PAD,
-                    36,
-                    _link(holder, _short(holder, freezer)),
-                )
-            )
-        by = cy + HEAD
-        for b in boxes:
-            nodes.append(
-                _text(
-                    b.rel,
-                    x + PAD,
-                    by,
-                    COL_W - 2 * PAD,
-                    BOX_H,
-                    _link(b, _box_title(b, holder or freezer)),
-                )
-            )
-            by += BOX_H + 6
-        cy += inner_h + GAP
-    return nodes, cy - y
+FREEZER_W, FREEZER_H = 280, 110
+
+
+def has_canvas(tree: Tree, n: Note) -> bool:
+    return n.props.get("kind") in COLD_KINDS and bool(tree.kids(n))
+
+
+def canvas_path(n: Note) -> str:
+    return f"{MAPS_DIR}/{FREEZER_DIR}/{n.name}.canvas"
+
+
+def _summary(tree: Tree, freezer: Note) -> str:
+    """'19 boxes · tower 5, tower 6' — what is recorded inside a freezer."""
+    secs = sections(tree, freezer)
+    boxes = sum(len(b) for _l, _h, b in secs)
+    holders = [label for label, h, _b in secs if h is not None]
+    if not boxes and not holders:
+        return "*nothing recorded yet*"
+    text = f"{boxes} box{'es' if boxes != 1 else ''}"
+    if holders:
+        shown = ", ".join(holders[:4]) + (f" +{len(holders) - 4} more" if len(holders) > 4 else "")
+        text += f" · {shown}"
+    return text
 
 
 def lab_map(vault: Vault) -> dict:
+    """Rooms and their freezers only; each freezer card links to that freezer's canvas."""
     tree = Tree(vault)
     nodes: list[dict] = [_text("notice", 0, -120, 700, 60, NOTICE)]
     x = 0
     for room in tree.roots:
-        freezers = [k for k in tree.kids(room) if k.type == "location"]
-        loose_boxes = [k for k in tree.kids(room) if k.type == "box"]
-        cols, heights, cx = [], [], x + PAD
-        for f in freezers:
-            col, h = _column(tree, f, cx, 0 + HEAD + CARD_H)
-            cols += col
-            heights.append(h)
-            cx += COL_W + GAP
-        for b in loose_boxes:
-            cols.append(_text(b.rel, cx, HEAD + CARD_H, COL_W, BOX_H, _link(b, b.name)))
-            heights.append(BOX_H)
-            cx += COL_W + GAP
-        width = max(cx - x - GAP + PAD, COL_W + 2 * PAD)
-        height = HEAD + CARD_H + (max(heights) if heights else 0) + PAD
-        nodes.append(_group(room.rel, x, 0, width, height, room.name))
+        freezers = [k for k in tree.kids(room) if k.props.get("kind") in COLD_KINDS]
+        width = max(len(freezers), 1) * (FREEZER_W + GAP) - GAP + 2 * PAD
+        height = HEAD + CARD_H + FREEZER_H + 2 * PAD
+        nodes.insert(0, _group(room.rel, x, 0, width, height, room.name))
         nodes.append(
             _text(
                 room.rel,
@@ -225,7 +198,22 @@ def lab_map(vault: Vault) -> dict:
                 f"## {_link(room, room.name)}",
             )
         )
-        nodes += cols
+        fx = x + PAD
+        for f in freezers:
+            label = _short(f, room)
+            target = f"[[{canvas_path(f)}|{label}]]" if has_canvas(tree, f) else _link(f, label)
+            nodes.append(
+                _text(
+                    f.rel,
+                    fx,
+                    HEAD + CARD_H,
+                    FREEZER_W,
+                    FREEZER_H,
+                    f"### {target}\n{_summary(tree, f)}",
+                    _color(f),
+                )
+            )
+            fx += FREEZER_W + GAP
         x += width + 2 * GAP
     groups = [n for n in nodes if n["type"] == "group"]
     return {"nodes": groups + [n for n in nodes if n["type"] != "group"], "edges": []}
@@ -238,6 +226,7 @@ BOX_W, BOX_CARD_H, PER_COLUMN = 340, 150, 10
 def freezer_canvas(vault: Vault, freezer: Note) -> dict:
     tree = Tree(vault)
     nodes: list[dict] = [
+        _text("back", 0, -280, 300, 60, f"[[{MAPS_DIR}/Lab map.canvas|← Lab map]]"),
         _text("title", 0, -200, 700, 70, f"# {_link(freezer, freezer.name)}", _color(freezer)),
         _text("notice", 0, -120, 700, 60, NOTICE),
     ]

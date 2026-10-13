@@ -5,90 +5,9 @@
 			"type": "group",
 			"x": 0,
 			"y": 0,
-			"width": 1660,
-			"height": 634,
+			"width": 1560,
+			"height": 270,
 			"label": "Lab"
-		},
-		{
-			"id": "4a9ebfbae06897f8",
-			"type": "group",
-			"x": 20,
-			"y": 210,
-			"width": 300,
-			"height": 172,
-			"label": "shelf 1 › rack 1"
-		},
-		{
-			"id": "21d2263f05cac9ed",
-			"type": "group",
-			"x": 350,
-			"y": 412,
-			"width": 300,
-			"height": 172,
-			"label": "shelf 2 › rack 1"
-		},
-		{
-			"id": "faaae30fe9bf969a",
-			"type": "group",
-			"x": 350,
-			"y": 210,
-			"width": 300,
-			"height": 172,
-			"label": "shelf 1 › rack 1"
-		},
-		{
-			"id": "e281b8df4e9329b8",
-			"type": "group",
-			"x": 680,
-			"y": 366,
-			"width": 300,
-			"height": 80,
-			"label": "shelf 2"
-		},
-		{
-			"id": "d5749b2e1fa4c9b3",
-			"type": "group",
-			"x": 680,
-			"y": 210,
-			"width": 300,
-			"height": 126,
-			"label": "shelf 1 › rack 1"
-		},
-		{
-			"id": "66aabc94a58b6786",
-			"type": "group",
-			"x": 1010,
-			"y": 412,
-			"width": 300,
-			"height": 126,
-			"label": "shelf 2 › rack 1"
-		},
-		{
-			"id": "46e68d7a297e2b6b",
-			"type": "group",
-			"x": 1010,
-			"y": 210,
-			"width": 300,
-			"height": 172,
-			"label": "shelf 1 › rack 1"
-		},
-		{
-			"id": "0d0eab63bb885be8",
-			"type": "group",
-			"x": 1340,
-			"y": 320,
-			"width": 300,
-			"height": 80,
-			"label": "shelf 2"
-		},
-		{
-			"id": "ddd303a2fc84ee2e",
-			"type": "group",
-			"x": 1340,
-			"y": 210,
-			"width": 300,
-			"height": 80,
-			"label": "shelf 1"
 		},
 		{
 			"id": "5b96a92262bfe945",
@@ -113,221 +32,50 @@
 			"type": "text",
 			"x": 20,
 			"y": 120,
-			"width": 300,
-			"height": 60,
-			"text": "### [[Freezer A -20]]",
+			"width": 280,
+			"height": 110,
+			"text": "### [[_maps/Freezers/Freezer A -20.canvas|Freezer A -20]]\n2 boxes · shelf 1 › rack 1",
 			"color": "4"
-		},
-		{
-			"id": "5e826889e38b16ce",
-			"type": "text",
-			"x": 40,
-			"y": 225,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer A -20, shelf 1, rack 1|shelf 1, rack 1]]"
-		},
-		{
-			"id": "5490fdda217b0ad8",
-			"type": "text",
-			"x": 40,
-			"y": 270,
-			"width": 260,
-			"height": 40,
-			"text": "[[Reference drugs box]]"
-		},
-		{
-			"id": "e14ca8d252bd423e",
-			"type": "text",
-			"x": 40,
-			"y": 316,
-			"width": 260,
-			"height": 40,
-			"text": "[[Series A 1 box]]"
 		},
 		{
 			"id": "bbcbe9687172cdfd",
 			"type": "text",
-			"x": 350,
+			"x": 330,
 			"y": 120,
-			"width": 300,
-			"height": 60,
-			"text": "### [[Freezer A -80]]",
+			"width": 280,
+			"height": 110,
+			"text": "### [[_maps/Freezers/Freezer A -80.canvas|Freezer A -80]]\n4 boxes · shelf 1 › rack 1, shelf 2 › rack 1",
 			"color": "5"
-		},
-		{
-			"id": "5bfe22a3704182ae",
-			"type": "text",
-			"x": 370,
-			"y": 225,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer A -80, shelf 1, rack 1|shelf 1, rack 1]]"
-		},
-		{
-			"id": "2b410b950d852bdc",
-			"type": "text",
-			"x": 370,
-			"y": 270,
-			"width": 260,
-			"height": 40,
-			"text": "[[Leishmania 1 box]]"
-		},
-		{
-			"id": "999e7daefb0b3071",
-			"type": "text",
-			"x": 370,
-			"y": 316,
-			"width": 260,
-			"height": 40,
-			"text": "[[Leishmania 2 box]]"
-		},
-		{
-			"id": "4db3e63f19261018",
-			"type": "text",
-			"x": 370,
-			"y": 427,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer A -80, shelf 2, rack 1|shelf 2, rack 1]]"
-		},
-		{
-			"id": "35613ff26994049b",
-			"type": "text",
-			"x": 370,
-			"y": 472,
-			"width": 260,
-			"height": 40,
-			"text": "[[RAW 264.7 box]]"
-		},
-		{
-			"id": "fae127864c7f111f",
-			"type": "text",
-			"x": 370,
-			"y": 518,
-			"width": 260,
-			"height": 40,
-			"text": "[[THP-1 box]]"
 		},
 		{
 			"id": "d5c115a7c25578b2",
 			"type": "text",
-			"x": 680,
+			"x": 640,
 			"y": 120,
-			"width": 300,
-			"height": 60,
-			"text": "### [[Freezer B -20]]",
+			"width": 280,
+			"height": 110,
+			"text": "### [[_maps/Freezers/Freezer B -20.canvas|Freezer B -20]]\n1 box · shelf 1 › rack 1, shelf 2",
 			"color": "4"
-		},
-		{
-			"id": "0cfe7f3a51e5d542",
-			"type": "text",
-			"x": 700,
-			"y": 225,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer B -20, shelf 1, rack 1|shelf 1, rack 1]]"
-		},
-		{
-			"id": "02a38edd45dee5dd",
-			"type": "text",
-			"x": 700,
-			"y": 270,
-			"width": 260,
-			"height": 40,
-			"text": "[[Series A 2 box]]"
-		},
-		{
-			"id": "435c3693b2184938",
-			"type": "text",
-			"x": 700,
-			"y": 381,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer B -20, shelf 2|shelf 2]]"
 		},
 		{
 			"id": "ee82b9c2faecbfcc",
 			"type": "text",
-			"x": 1010,
+			"x": 950,
 			"y": 120,
-			"width": 300,
-			"height": 60,
-			"text": "### [[Freezer B -80]]",
+			"width": 280,
+			"height": 110,
+			"text": "### [[_maps/Freezers/Freezer B -80.canvas|Freezer B -80]]\n3 boxes · shelf 1 › rack 1, shelf 2 › rack 1",
 			"color": "5"
-		},
-		{
-			"id": "6076c98151aa2906",
-			"type": "text",
-			"x": 1030,
-			"y": 225,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer B -80, shelf 1, rack 1|shelf 1, rack 1]]"
-		},
-		{
-			"id": "b8633ba16fd9ef2b",
-			"type": "text",
-			"x": 1030,
-			"y": 270,
-			"width": 260,
-			"height": 40,
-			"text": "[[BMDM box]]"
-		},
-		{
-			"id": "bbe38589040b5a76",
-			"type": "text",
-			"x": 1030,
-			"y": 316,
-			"width": 260,
-			"height": 40,
-			"text": "[[Leishmania backup box]]"
-		},
-		{
-			"id": "912742b4f8bfd60b",
-			"type": "text",
-			"x": 1030,
-			"y": 427,
-			"width": 260,
-			"height": 36,
-			"text": "[[Freezer B -80, shelf 2, rack 1|shelf 2, rack 1]]"
-		},
-		{
-			"id": "b5857b782cb0ca71",
-			"type": "text",
-			"x": 1030,
-			"y": 472,
-			"width": 260,
-			"height": 40,
-			"text": "[[Cell lines backup box]]"
 		},
 		{
 			"id": "f4a09e1af4e2a8bd",
 			"type": "text",
-			"x": 1340,
+			"x": 1260,
 			"y": 120,
-			"width": 300,
-			"height": 60,
-			"text": "### [[Fridge 4C]]",
+			"width": 280,
+			"height": 110,
+			"text": "### [[_maps/Freezers/Fridge 4C.canvas|Fridge 4C]]\n0 boxes · shelf 1, shelf 2",
 			"color": "3"
-		},
-		{
-			"id": "67f46ae8282c2614",
-			"type": "text",
-			"x": 1360,
-			"y": 225,
-			"width": 260,
-			"height": 36,
-			"text": "[[Fridge 4C, shelf 1|shelf 1]]"
-		},
-		{
-			"id": "37cea4bc3136e3d0",
-			"type": "text",
-			"x": 1360,
-			"y": 335,
-			"width": 260,
-			"height": 36,
-			"text": "[[Fridge 4C, shelf 2|shelf 2]]"
 		}
 	],
 	"edges": []

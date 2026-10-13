@@ -19,6 +19,15 @@
 			"label": "shelf 1"
 		},
 		{
+			"id": "39079a1a347f72e1",
+			"type": "text",
+			"x": 0,
+			"y": -280,
+			"width": 300,
+			"height": 60,
+			"text": "[[_maps/Lab map.canvas|← Lab map]]"
+		},
+		{
 			"id": "bbbb6fd685e67e05",
 			"type": "text",
 			"x": 0,

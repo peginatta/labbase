@@ -60,7 +60,7 @@ Not needed to read or write the vault. People who have it can run:
 - `labbase render` — writes every note's full location (room › freezer › tower › box ›
   position) twice: as the plain-text `where` property (for tables) and as a clickable 📍 line
   under the title. Both are generated: don't edit them, change `location`/`position` instead.
-  Also redraws the box maps and the canvases in `_maps/` (a lab map and one per freezer;
+  Also redraws the box maps and the canvases in `_maps/` (a lab map of rooms and freezers whose cards open one canvas per freezer;
   generated — moving cards there is overwritten).
 
 ## History
