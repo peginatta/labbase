@@ -31,3 +31,19 @@ views:
       - frozen_on
       - expiry
 ```
+
+## Items in this box
+```base
+filters:
+  and:
+    - location == this
+views:
+  - type: table
+    name: Items in this box
+    order:
+      - position
+      - file.name
+      - target
+      - direction
+      - status
+```
