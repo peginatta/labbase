@@ -2,15 +2,12 @@
 id: BOX-0009
 type: box
 parent: "[[Freezer B -20, shelf 1, rack 1]]"
+where: "Lab › Freezer B -20 › shelf 1 › rack 1"
 slot: "1"
 rows: 9
 cols: 9
 ---
 # Series A 2 box
-
-<!-- labbase:where start -->
-📍 [[Lab]] › [[Freezer B -20]] › [[Freezer B -20, shelf 1|shelf 1]] › [[Freezer B -20, shelf 1, rack 1|rack 1]]
-<!-- labbase:where end -->
 
 <!-- labbase:box-map start -->
 

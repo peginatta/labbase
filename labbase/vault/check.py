@@ -30,8 +30,22 @@ class CheckResult:
         return [s for s in self.statuses if s.status != Status.OK or s.expires_soon]
 
 
+def check_where(vault: Vault) -> list[Issue]:
+    """`where` is generated: warn when it no longer matches the links (edited by hand/outdated)."""
+    from labbase.vault.render import where_text
+
+    issues = []
+    for n in vault.notes:
+        stored = n.props.get("where")
+        if stored is not None and stored != where_text(vault, n):
+            msg = "is generated and out of date — run `labbase render` (the hourly run fixes it)"
+            issues.append(Issue(WARNING, n.rel, "where", msg))
+    return issues
+
+
 def run_checks(vault: Vault, today: date | None = None) -> CheckResult:
     issues = check_fields(vault) + check_links(vault) + check_stocks(vault) + check_positions(vault)
+    issues += check_where(vault)
     issues.sort(key=lambda i: (i.level != ERROR, i.rel, i.field))
     statuses = [stock_status(vault, n, today) for n in vault.notes if n.type == "stock"]
     return CheckResult(issues, statuses, item_totals(vault, statuses))

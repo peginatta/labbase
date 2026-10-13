@@ -12,6 +12,7 @@ from labbase.vault import positions
 from labbase.vault.crosscheck import box_grid, occupancy
 from labbase.vault.model import Note, Vault
 from labbase.vault.reader import split_frontmatter
+from labbase.vault.writer import scalar
 
 START, END = "<!-- labbase:box-map start -->", "<!-- labbase:box-map end -->"
 WHERE_START, WHERE_END = "<!-- labbase:where start -->", "<!-- labbase:where end -->"
@@ -83,7 +84,8 @@ def replace_marked(body: str, start: str, end: str, block: str | None) -> str:
         before, rest = body.split(start, 1)
         _old, after = rest.split(end, 1)
         if block is None:
-            return before.rstrip("\n") + "\n" + after.lstrip("\n")
+            sep = "\n\n" if before.strip() and after.strip() else "\n"
+            return before.rstrip("\n") + sep + after.lstrip("\n")
         return before + block + after
     if block is None:
         return body
@@ -149,33 +151,69 @@ def short_name(child: Note, parent: Note | None) -> str:
     return child.name
 
 
-def where_block(vault: Vault, note: Note) -> str | None:
+def where_text(vault: Vault, note: Note) -> str | None:
+    """Full location as plain text: 'Lab 3260 › -20 horizontal › … › Leishmania primers I › B9'."""
     place, pos = place_of(vault, note)
     if place is None or place.type not in PLACE_TYPES:
         return None
     parts, prev = [], None
     for n in chain(vault, place):
-        label = short_name(n, prev)
-        parts.append(f"[[{n.name}]]" if label == n.name else f"[[{n.name}|{label}]]")
+        parts.append(short_name(n, prev))
         prev = n
     if pos:
-        parts.append(f"**{pos}**")
-    return f"{WHERE_START}\n📍 " + " › ".join(parts) + f"\n{WHERE_END}"
+        parts.append(pos)
+    return " › ".join(parts)
+
+
+def set_property_line(text: str, key: str, value: str | None) -> str:
+    """Set/remove one top-level property line in the frontmatter, leaving everything else as is.
+
+    A new property is added after `position`/`positions`/`location`/`box`/`parent` when present,
+    otherwise at the end of the properties."""
+    fm, _body = split_frontmatter(text)
+    if fm is None:
+        return text
+    lines = text.splitlines(keepends=True)
+    end = 1 + len(fm.splitlines())  # index of the closing '---'
+    prop_re = re.compile(rf"^{re.escape(key)}:(\s|$)")
+    idx = next((i for i in range(1, end) if prop_re.match(lines[i])), None)
+    if idx is not None:  # drop the old value, including indented continuation lines
+        stop = idx + 1
+        while (
+            stop < end and lines[stop][:1] in (" ", "\t", "-") and not lines[stop].startswith("---")
+        ):
+            stop += 1
+        del lines[idx:stop]
+        end -= stop - idx
+    if value is not None:
+        new_line = f"{key}: {scalar(value)}\n"
+        if idx is None:
+            anchors = ("position", "positions", "location", "box", "parent")
+            idx = end
+            for i in range(1, end):
+                if re.match(rf"^({'|'.join(anchors)}):(\s|$)", lines[i]):
+                    idx = i + 1
+        lines.insert(idx, new_line)
+    return "".join(lines)
 
 
 def render_where(vault: Vault) -> list[Path]:
-    """Write the full location line (📍 room › freezer › … › position) under each note's title."""
+    """Keep the generated `where` property (full location) up to date on every note.
+
+    Also removes the 📍 lines that v0.3.0 wrote into note text."""
     changed = []
     for note in vault.notes:
         if note.parse_error or not note.type:
             continue
-        block = where_block(vault, note)
+        value = where_text(vault, note)
         text = note.path.read_text(encoding="utf-8")
-        if block is None and WHERE_START not in text:
-            continue
-        _fm, body = split_frontmatter(text)
-        head = text[: len(text) - len(body)]
-        new = head + replace_marked(body, WHERE_START, WHERE_END, block)
+        new = text
+        if WHERE_START in new:  # migrate away from the old in-text line
+            _fm, body = split_frontmatter(new)
+            head = new[: len(new) - len(body)]
+            new = head + replace_marked(body, WHERE_START, WHERE_END, None)
+        if note.props.get("where") != value:
+            new = set_property_line(new, "where", value)
         if new != text:
             note.path.write_text(new, encoding="utf-8")
             changed.append(note.path)

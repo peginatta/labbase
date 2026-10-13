@@ -105,6 +105,7 @@
     "related_drugs": "text",
     "design_details": "text",
     "specificity": "text",
-    "position": "text"
+    "position": "text",
+    "where": "text"
   }
 }

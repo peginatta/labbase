@@ -3,6 +3,7 @@ id: STK-0037
 type: stock
 content: "[[Schneider's medium]]"
 location: "[[Fridge 4C, shelf 1]]"
+where: "Lab › Fridge 4C › shelf 1"
 vials_left: 1
 container: bottle
 lot: "2810455"
@@ -12,9 +13,5 @@ volume_mL: 500
 last_checked: 2026-08-28
 ---
 # Schneider's medium lot 2810455
-
-<!-- labbase:where start -->
-📍 [[Lab]] › [[Fridge 4C]] › [[Fridge 4C, shelf 1|shelf 1]]
-<!-- labbase:where end -->
 
 Example data — replace with the real records.
