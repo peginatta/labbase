@@ -1,0 +1,82 @@
+type: primer
+id_prefix: PRM
+folder: Primers
+description: >
+  An oligonucleotide (PCR / qPCR / sequencing / cloning primer or probe). One note per oligo;
+  `status` and `location` say whether and where the tube is.
+fields:
+  code:
+    kind: text
+    required: true
+    help: The lab code written on the tube, e.g. "IST 19". Primers without a number keep their name.
+  sequence:
+    kind: text
+    help: 5'→3', no spaces. Lowercase letters = 5' tail that doesn't bind (e.g. restriction site).
+  length_nt:
+    kind: integer
+  gc_percent:
+    kind: number
+  tm_C:
+    kind: number
+    help: Melting temperature as given by the designer/supplier.
+  annealing_C:
+    kind: number
+  direction:
+    kind: choice
+    options: [forward, reverse, probe, other]
+  pair:
+    kind: link
+    to: [primer]
+    help: The partner primer of the pair.
+  description:
+    kind: text
+    help: The primer's name/description as written in the original list.
+  target:
+    kind: text
+    help: What it binds/amplifies (gene, plasmid region…), as written.
+  gene_symbol:
+    kind: text
+  gene_name:
+    kind: text
+  accession:
+    kind: text
+    help: GenBank/RefSeq accession, e.g. XM_001686764.1
+  ncbi_gene_id:
+    kind: text
+  organism:
+    kind: text
+  purpose:
+    kind: text
+    help: What it is used for (RT-qPCR, cloning into pLEXSY, sequencing…), as written.
+  amplicon_bp:
+    kind: integer
+  status:
+    kind: choice
+    options: [in stock, ordered, to order, not found, finished]
+  location:
+    kind: link
+    to: [location, box]
+  designed_by:
+    kind: text
+  requested_by:
+    kind: text
+  project:
+    kind: text
+    help: Context / project / section of the original list.
+  order_ref:
+    kind: text
+    help: Supplier order number and date, e.g. "10659 del 19.11.2012".
+  order_status:
+    kind: text
+    help: Ordering status as written in the original list (pedido, recibido, por pedir…).
+  mechanism:
+    kind: text
+  related_drugs:
+    kind: text
+  design_details:
+    kind: text
+  specificity:
+    kind: text
+  source:
+    kind: text
+    help: Where this record was imported from (file › tab › row).

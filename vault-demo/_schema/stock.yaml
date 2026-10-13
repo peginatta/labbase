@@ -7,7 +7,7 @@ description: >
 fields:
   content:
     kind: link
-    to: [compound, strain, cell_line, item, media_batch]
+    to: [compound, strain, cell_line, item, media_batch, primer]
     required: true
     help: What is inside.
   box:

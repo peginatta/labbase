@@ -1,11 +1,11 @@
 type: location
 id_prefix: LOC
 folder: Locations
-description: A place things are stored — room, freezer, fridge, shelf, rack. Boxes have their own type.
+description: A place things are stored — room, freezer, fridge, shelf, rack, tower. Boxes have their own type.
 fields:
   kind:
     kind: choice
-    options: [site, room, freezer, fridge, incubator, cabinet, shelf, rack]
+    options: [site, room, freezer, fridge, incubator, cabinet, shelf, rack, tower]
     required: true
   parent:
     kind: link

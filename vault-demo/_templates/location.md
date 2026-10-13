@@ -9,4 +9,4 @@ created: "{{date}}"
 ---
 # {{title}}
 
-<!-- location: A place things are stored — room, freezer, fridge, shelf, rack. Boxes have their own type. -->
+<!-- location: A place things are stored — room, freezer, fridge, shelf, rack, tower. Boxes have their own type. -->
