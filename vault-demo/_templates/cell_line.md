@@ -36,3 +36,18 @@ views:
       - vials_left
       - expiry
 ```
+
+## Boxes that contain it
+```base
+filters:
+  and:
+    - type == "box"
+    - file.hasLink(this.file)
+views:
+  - type: table
+    name: Boxes that contain it
+    order:
+      - file.name
+      - label
+      - where
+```
