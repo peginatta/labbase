@@ -14,4 +14,8 @@ last_checked: 2026-08-28
 ---
 # Schneider's medium lot 2810455
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Fridge 4C]] › [[Fridge 4C, shelf 1|shelf 1]]
+<!-- labbase:where end -->
+
 Example data — replace with the real records.

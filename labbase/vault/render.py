@@ -151,18 +151,37 @@ def short_name(child: Note, parent: Note | None) -> str:
     return child.name
 
 
-def where_text(vault: Vault, note: Note) -> str | None:
-    """Full location as plain text: 'Lab 3260 › -20 horizontal › … › Leishmania primers I › B9'."""
+def _where_parts(vault: Vault, note: Note) -> tuple[list[tuple[Note, str]], str] | None:
+    """[(place, short label) from the room down], position — or None when the note has no place."""
     place, pos = place_of(vault, note)
     if place is None or place.type not in PLACE_TYPES:
         return None
     parts, prev = [], None
     for n in chain(vault, place):
-        parts.append(short_name(n, prev))
+        parts.append((n, short_name(n, prev)))
         prev = n
+    return parts, pos
+
+
+def where_text(vault: Vault, note: Note) -> str | None:
+    """Full location as plain text: 'Lab 3260 › -20 horizontal › … › Leishmania primers I › B9'."""
+    found = _where_parts(vault, note)
+    if found is None:
+        return None
+    parts, pos = found
+    return " › ".join([label for _n, label in parts] + ([pos] if pos else []))
+
+
+def where_block(vault: Vault, note: Note) -> str | None:
+    """The same location as a clickable line under the title (📍 [[Lab 3260]] › …)."""
+    found = _where_parts(vault, note)
+    if found is None:
+        return None
+    parts, pos = found
+    links = [f"[[{n.name}]]" if label == n.name else f"[[{n.name}|{label}]]" for n, label in parts]
     if pos:
-        parts.append(pos)
-    return " › ".join(parts)
+        links.append(f"**{pos}**")
+    return f"{WHERE_START}\n📍 " + " › ".join(links) + f"\n{WHERE_END}"
 
 
 def set_property_line(text: str, key: str, value: str | None) -> str:
@@ -198,20 +217,21 @@ def set_property_line(text: str, key: str, value: str | None) -> str:
 
 
 def render_where(vault: Vault) -> list[Path]:
-    """Keep the generated `where` property (full location) up to date on every note.
-
-    Also removes the 📍 lines that v0.3.0 wrote into note text."""
+    """Keep the generated location up to date on every note, in two forms:
+    the plain-text `where` property (for tables/filters) and a clickable 📍 line under the title.
+    Both are removed when the note has no place."""
     changed = []
     for note in vault.notes:
         if note.parse_error or not note.type:
             continue
         value = where_text(vault, note)
+        block = where_block(vault, note)
         text = note.path.read_text(encoding="utf-8")
         new = text
-        if WHERE_START in new:  # migrate away from the old in-text line
+        if block is not None or WHERE_START in new:
             _fm, body = split_frontmatter(new)
             head = new[: len(new) - len(body)]
-            new = head + replace_marked(body, WHERE_START, WHERE_END, None)
+            new = head + replace_marked(body, WHERE_START, WHERE_END, block)
         if note.props.get("where") != value:
             new = set_property_line(new, "where", value)
         if new != text:

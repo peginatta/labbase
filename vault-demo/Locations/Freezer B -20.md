@@ -8,4 +8,8 @@ temperature_C: -20
 ---
 # Freezer B -20
 
+<!-- labbase:where start -->
+📍 [[Lab]]
+<!-- labbase:where end -->
+
 Full name: −20 °C Freezer B.

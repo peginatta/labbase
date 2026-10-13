@@ -14,4 +14,8 @@ volume_uL: 100
 ---
 # Paromomycin sulfate 10 mM
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer A -20]] › [[Freezer A -20, shelf 1|shelf 1]] › [[Freezer A -20, shelf 1, rack 1|rack 1]] › [[Reference drugs box]] › **D1, D2**
+<!-- labbase:where end -->
+
 Example data — replace with the real records.

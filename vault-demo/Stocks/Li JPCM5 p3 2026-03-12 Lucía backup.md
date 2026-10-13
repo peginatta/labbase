@@ -14,4 +14,8 @@ cells_per_vial: 20000000
 ---
 # Li JPCM5 p3 2026-03-12 Lucía backup
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer B -80]] › [[Freezer B -80, shelf 1|shelf 1]] › [[Freezer B -80, shelf 1, rack 1|rack 1]] › [[Leishmania backup box]] › **A1, A2**
+<!-- labbase:where end -->
+
 Example data — replace with the real records.

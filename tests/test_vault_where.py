@@ -1,4 +1,4 @@
-"""The generated `where` property: full location, following parent links up to the room."""
+"""Generated location: plain `where` property + clickable 📍 line, from the parent links."""
 
 from pathlib import Path
 
@@ -8,6 +8,10 @@ from labbase.vault.render import WHERE_END, WHERE_START, render_where, set_prope
 from tests.test_vault_fields import vault_dir, write  # noqa: F401
 
 TOWER = "Lab 3260 › -20 horizontal › tower Leishmania I"
+LINE = (
+    "📍 [[Lab 3260]] › [[Lab 3260 -20 horizontal|-20 horizontal]] › "
+    "[[Lab 3260 -20 horizontal, tower Leishmania I|tower Leishmania I]] › [[Primers I]]"
+)
 
 
 def _lab(root: Path) -> None:
@@ -47,7 +51,7 @@ def where(root: Path, rel: str) -> str | None:
     return read_note(root / rel, root).props.get("where")
 
 
-def test_where_property(vault_dir: Path) -> None:  # noqa: F811
+def test_property_and_line(vault_dir: Path) -> None:  # noqa: F811
     _lab(vault_dir)
     render_where(load_vault(vault_dir))
     assert where(vault_dir, "Primers/IST 19.md") == f"{TOWER} › Primers I › B9"
@@ -55,10 +59,29 @@ def test_where_property(vault_dir: Path) -> None:  # noqa: F811
     assert where(vault_dir, "Locations/Primers I.md") == TOWER
     assert where(vault_dir, "Locations/Lab 3260.md") is None  # top level
     text = (vault_dir / "Primers/IST 19.md").read_text()
-    assert 'position: b9\nwhere: "' in text  # placed right after the location properties
-    assert text.endswith("# IST 19\n\nMy text.\n")
+    assert 'position: b9\nwhere: "' in text  # property right after the location properties
+    assert f"{WHERE_START}\n{LINE} › **B9**\n{WHERE_END}" in text
+    assert text.index("# IST 19") < text.index(WHERE_START) < text.index("My text.")
+    stock = (vault_dir / "Stocks/THP-1 p8.md").read_text()
+    assert f"{LINE} › **A1, A2**" in stock  # no title: line goes at the top of the text
+    assert WHERE_START not in (vault_dir / "Locations/Lab 3260.md").read_text()
     assert render_where(load_vault(vault_dir)) == []  # idempotent
     assert run_checks(load_vault(vault_dir)).issues == []
+
+
+def test_edits_are_put_back(vault_dir: Path) -> None:  # noqa: F811
+    _lab(vault_dir)
+    render_where(load_vault(vault_dir))
+    path = vault_dir / "Primers/IST 19.md"
+    text = path.read_text()
+    tampered = text.replace("› **B9**", "› **Z1**").replace(
+        f'where: "{TOWER} › Primers I › B9"', 'where: "somewhere"'
+    )
+    path.write_text(tampered)
+    msgs = [i.message for i in run_checks(load_vault(vault_dir)).warnings]
+    assert any("out of date" in m for m in msgs)
+    render_where(load_vault(vault_dir))
+    assert path.read_text() == text
 
 
 def test_moving_a_box_and_removing_a_place(vault_dir: Path) -> None:  # noqa: F811
@@ -71,27 +94,15 @@ def test_moving_a_box_and_removing_a_place(vault_dir: Path) -> None:  # noqa: F8
             'parent: "[[Lab 3260 -20 horizontal, tower Leishmania I]]"', 'parent: "[[Basement]]"'
         )
     )
-    msgs = [i.message for i in run_checks(load_vault(vault_dir)).warnings]
-    assert any("out of date" in m for m in msgs)  # stale until the next render
     render_where(load_vault(vault_dir))
-    assert where(vault_dir, "Primers/IST 19.md") == "Basement › Primers I › B9"
     path = vault_dir / "Primers/IST 19.md"
+    assert where(vault_dir, "Primers/IST 19.md") == "Basement › Primers I › B9"
+    assert "📍 [[Basement]] › [[Primers I]] › **B9**" in path.read_text()
     path.write_text(path.read_text().replace('location: "[[Primers I]]"\nposition: b9\n', ""))
     render_where(load_vault(vault_dir))
-    assert where(vault_dir, "Primers/IST 19.md") is None
-
-
-def test_migrates_old_in_text_line(vault_dir: Path) -> None:  # noqa: F811
-    _lab(vault_dir)
-    path = vault_dir / "Primers/IST 19.md"
-    path.write_text(
-        path.read_text().replace(
-            "# IST 19\n", f"# IST 19\n\n{WHERE_START}\n📍 old line\n{WHERE_END}\n"
-        )
-    )
-    render_where(load_vault(vault_dir))
     text = path.read_text()
-    assert WHERE_START not in text and "📍" not in text and "My text." in text
+    assert where(vault_dir, "Primers/IST 19.md") is None
+    assert WHERE_START not in text and text.endswith("# IST 19\n\nMy text.\n")
 
 
 def test_set_property_line() -> None:

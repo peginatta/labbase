@@ -57,8 +57,10 @@ Not needed to read or write the vault. People who have it can run:
 - `labbase check` — finds mistakes: broken links, two vials in the same box position,
   `vials_left` not matching positions, missing required properties, expired/stale stocks.
 - `labbase fill-ids` — gives new notes their `id`.
-- `labbase render` — fills the `where` property of every note (full location: room ›
-  freezer › tower › box › position) and redraws the box maps inside box notes.
+- `labbase render` — writes every note's full location (room › freezer › tower › box ›
+  position) twice: as the plain-text `where` property (for tables) and as a clickable 📍 line
+  under the title. Both are generated: don't edit them, change `location`/`position` instead.
+  Also redraws the box maps.
 
 ## History
 

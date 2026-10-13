@@ -9,6 +9,10 @@ cols: 9
 ---
 # Leishmania 1 box
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer A -80]] › [[Freezer A -80, shelf 1|shelf 1]] › [[Freezer A -80, shelf 1, rack 1|rack 1]]
+<!-- labbase:where end -->
+
 <!-- labbase:box-map start -->
 
 **Box map** (7 of 81 positions used)

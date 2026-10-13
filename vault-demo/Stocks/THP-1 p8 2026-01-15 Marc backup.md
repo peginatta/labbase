@@ -14,4 +14,8 @@ cells_per_vial: 5000000
 ---
 # THP-1 p8 2026-01-15 Marc backup
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer B -80]] › [[Freezer B -80, shelf 2|shelf 2]] › [[Freezer B -80, shelf 2, rack 1|rack 1]] › [[Cell lines backup box]] › **A1, A2**
+<!-- labbase:where end -->
+
 Example data — replace with the real records.
