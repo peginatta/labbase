@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from labbase.vault.crosscheck import check_links, check_stocks
+from labbase.vault.crosscheck import check_links, check_positions, check_stocks
 from labbase.vault.model import Vault
 from labbase.vault.status import ContentTotal, Status, StockStatus, item_totals, stock_status
 from labbase.vault.validate import ERROR, WARNING, Issue, check_fields
@@ -31,7 +31,7 @@ class CheckResult:
 
 
 def run_checks(vault: Vault, today: date | None = None) -> CheckResult:
-    issues = check_fields(vault) + check_links(vault) + check_stocks(vault)
+    issues = check_fields(vault) + check_links(vault) + check_stocks(vault) + check_positions(vault)
     issues.sort(key=lambda i: (i.level != ERROR, i.rel, i.field))
     statuses = [stock_status(vault, n, today) for n in vault.notes if n.type == "stock"]
     return CheckResult(issues, statuses, item_totals(vault, statuses))

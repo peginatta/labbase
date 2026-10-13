@@ -28,7 +28,11 @@ OBSIDIAN_TYPES = {
 
 
 def short_label(stock: Note) -> str:
-    """Short text for a box cell: the stock name without its date/person tail."""
+    """Short text for a box cell: an item's code (primers), or the stock name without its
+    date/person tail."""
+    code = stock.props.get("code") if hasattr(stock, "props") else None
+    if isinstance(code, str) and code.strip():
+        return code.strip()[:16]
     words = stock.name.split()
     keep = []
     for w in words:

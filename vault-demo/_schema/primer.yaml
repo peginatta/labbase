@@ -49,6 +49,10 @@ fields:
   location:
     kind: link
     to: [location, box]
+    help: Where the tube is — a box (then also give `position`) or a tower/shelf.
+  position:
+    kind: position
+    help: Position in the box, e.g. B7. Leave empty if unknown.
   designed_by:
     kind: text
   requested_by:

@@ -16,6 +16,7 @@ organism:
 amplicon_bp:
 status:
 location:
+position:
 designed_by:
 requested_by:
 project:

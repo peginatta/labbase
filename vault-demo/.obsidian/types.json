@@ -104,6 +104,7 @@
     "mechanism": "text",
     "related_drugs": "text",
     "design_details": "text",
-    "specificity": "text"
+    "specificity": "text",
+    "position": "text"
   }
 }
