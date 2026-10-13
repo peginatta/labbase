@@ -112,3 +112,29 @@ def test_set_property_line() -> None:
         '---\na: 1\nwhere: "X › Y"\nb: [x,\n  y]\n---\nbody\n'
     )
     assert set_property_line("---\na: 1\n---\n", "where", "Z") == "---\na: 1\nwhere: Z\n---\n"
+
+
+def test_box_note_order_and_empty_map(vault_dir: Path) -> None:  # noqa: F811
+    from labbase.vault.render import END, START, render_box_maps
+
+    _lab(vault_dir)
+    write(
+        vault_dir,
+        "Locations/Empty box.md",
+        '---\ntype: box\nparent: "[[Lab 3260 -20 horizontal, tower Leishmania I]]"\n---\n'
+        "# Empty box\n\nGuide text.\n",
+    )
+    render_box_maps(load_vault(vault_dir))  # map first, location line second: wrong order
+    render_where(load_vault(vault_dir))
+    render_box_maps(load_vault(vault_dir))  # ...is repaired
+    for rel in ("Locations/Empty box.md", "Locations/Primers I.md"):
+        text = (vault_dir / rel).read_text()
+        assert text.index(WHERE_END) < text.index(START) < text.index(END), rel
+    empty = (vault_dir / "Locations/Empty box.md").read_text()
+    assert "No positions recorded for this box yet" in empty and "| **A** |" not in empty
+    assert empty.rstrip().endswith("Guide text.")
+    full = (vault_dir / "Locations/Primers I.md").read_text()
+    assert "(3 of 100 positions used)" in full  # IST 19 + two stock vials
+    assert (
+        render_box_maps(load_vault(vault_dir)) == [] and render_where(load_vault(vault_dir)) == []
+    )

@@ -1,6 +1,7 @@
 ---
 id:
 type: box
+label:
 parent:
 slot:
 rows: 9

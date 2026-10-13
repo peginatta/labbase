@@ -5,7 +5,7 @@ description: A place things are stored — room, freezer, fridge, shelf, rack, t
 fields:
   kind:
     kind: choice
-    options: [site, room, freezer, fridge, incubator, cabinet, shelf, rack, tower]
+    options: [site, room, freezer, fridge, incubator, cabinet, shelf, rack, tower, other]
     required: true
   parent:
     kind: link

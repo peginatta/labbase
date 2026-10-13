@@ -39,6 +39,9 @@ body: |
         - status
   ```
 fields:
+  label:
+    kind: text
+    help: What is written on the box (e.g. "AROIA 2", "Pepe -80ºC").
   parent:
     kind: link
     to: [location]

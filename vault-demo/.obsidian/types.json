@@ -106,6 +106,7 @@
     "design_details": "text",
     "specificity": "text",
     "position": "text",
-    "where": "text"
+    "where": "text",
+    "label": "text"
   }
 }

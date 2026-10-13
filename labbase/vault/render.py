@@ -59,6 +59,8 @@ def _table(rows: list[list[str]]) -> list[str]:
 def box_map(vault: Vault, box: Note) -> str:
     rows, cols = box_grid(box)
     used = occupancy(vault).get(box.rel, {})
+    if not used:  # contents not inventoried by position: an empty grid would be misleading
+        return "\n".join([START, "", "*No positions recorded for this box yet.*", "", END])
     table = [["", *(str(c + 1) for c in range(cols))]]
     for r in range(rows):
         cells = []
@@ -91,6 +93,8 @@ def replace_marked(body: str, start: str, end: str, block: str | None) -> str:
         return body
     lines = body.split("\n")
     insert_at = next((i + 1 for i, line in enumerate(lines) if line.startswith("# ")), 0)
+    if start != WHERE_START and WHERE_END in lines:  # other blocks go below the location line
+        insert_at = max(insert_at, lines.index(WHERE_END) + 1)
     after_blank = insert_at < len(lines) and lines[insert_at].strip() == ""
     new = (["", block] if insert_at else [block]) + ([] if after_blank else [""])
     lines[insert_at:insert_at] = new
@@ -107,6 +111,8 @@ def render_box_maps(vault: Vault) -> list[Path]:
         text = box.path.read_text(encoding="utf-8")
         fm, body = split_frontmatter(text)
         head = text[: len(text) - len(body)]
+        if START in body and WHERE_START in body and body.index(START) < body.index(WHERE_START):
+            body = replace_marked(body, START, END, None)  # map above the 📍 line: move it down
         new = head + replace_block(body, box_map(vault, box))
         if new != text:
             box.path.write_text(new, encoding="utf-8")

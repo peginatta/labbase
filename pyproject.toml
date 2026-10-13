@@ -1,6 +1,6 @@
 [project]
 name = "labbase"
-version = "0.5.0"
+version = "0.6.0"
 description = "Tools for a files-first lab vault (Obsidian Markdown notes): check, IDs, templates, box maps"
 authors = [
     { name = "peginatta", email = "35983950+peginatta@users.noreply.github.com" }

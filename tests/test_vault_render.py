@@ -30,7 +30,7 @@ def test_box_map_is_generated_and_idempotent(vault_dir: Path) -> None:  # noqa: 
     )
     render_box_maps(load_vault(vault_dir))
     text = (vault_dir / "Locations/Small box.md").read_text()
-    assert text.count(START) == text.count(END) == 1 and "(0 of 6" in text
+    assert text.count(START) == text.count(END) == 1 and "No positions recorded" in text
 
 
 def test_short_label() -> None:
