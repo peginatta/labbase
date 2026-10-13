@@ -10,12 +10,9 @@ annealing_C:
 direction:
 pair:
 target:
-gene_symbol:
-gene_name:
 accession:
 ncbi_gene_id:
 organism:
-purpose:
 amplicon_bp:
 status:
 location:

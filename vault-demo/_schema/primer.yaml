@@ -28,16 +28,12 @@ fields:
     kind: link
     to: [primer]
     help: The partner primer of the pair.
-  description:
-    kind: text
-    help: The primer's name/description as written in the original list.
   target:
     kind: text
-    help: What it binds/amplifies (gene, plasmid region…), as written.
-  gene_symbol:
-    kind: text
-  gene_name:
-    kind: text
+    help: >
+      What the primer is for — gene or region name, with the gene symbol in parentheses,
+      e.g. "24-c-methyltransferase (LmSMT)". One property instead of separate gene name /
+      gene symbol / description / purpose.
   accession:
     kind: text
     help: GenBank/RefSeq accession, e.g. XM_001686764.1
@@ -45,9 +41,6 @@ fields:
     kind: text
   organism:
     kind: text
-  purpose:
-    kind: text
-    help: What it is used for (RT-qPCR, cloning into pLEXSY, sequencing…), as written.
   amplicon_bp:
     kind: integer
   status:
