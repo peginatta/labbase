@@ -8,6 +8,10 @@ cols: 9
 ---
 # Reference drugs box
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer A -20]] › [[Freezer A -20, shelf 1|shelf 1]] › [[Freezer A -20, shelf 1, rack 1|rack 1]]
+<!-- labbase:where end -->
+
 <!-- labbase:box-map start -->
 
 **Box map** (12 of 81 positions used)

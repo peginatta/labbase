@@ -8,6 +8,10 @@ cols: 9
 ---
 # THP-1 box
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer A -80]] › [[Freezer A -80, shelf 2|shelf 2]] › [[Freezer A -80, shelf 2, rack 1|rack 1]]
+<!-- labbase:where end -->
+
 <!-- labbase:box-map start -->
 
 **Box map** (5 of 81 positions used)

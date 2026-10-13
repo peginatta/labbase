@@ -11,4 +11,8 @@ last_checked: 2026-10-06
 ---
 # DMEM complete 2026-09-30 bottle
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Fridge 4C]] › [[Fridge 4C, shelf 2|shelf 2]]
+<!-- labbase:where end -->
+
 Example data — replace with the real records.

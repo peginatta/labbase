@@ -12,4 +12,8 @@ last_checked: 2026-10-06
 ---
 # Pen-Strep 100x lot 2875550
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer B -20]] › [[Freezer B -20, shelf 2|shelf 2]]
+<!-- labbase:where end -->
+
 Example data — replace with the real records.

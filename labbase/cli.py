@@ -77,13 +77,15 @@ def templates_cmd(vault: str = typer.Argument(".", help="Path to the vault folde
 
 @cli.command()
 def render(vault: str = typer.Argument(".", help="Path to the vault folder")) -> None:
-    """Redraw box maps inside box notes and update Obsidian's property types."""
+    """Write the 📍 location line in every note, redraw box maps, update property types."""
     from labbase.vault.reader import load_vault
-    from labbase.vault.render import render_box_maps, write_obsidian_types
+    from labbase.vault.render import render_box_maps, render_where, write_obsidian_types
 
     v = load_vault(vault)
-    changed = render_box_maps(v)
-    typer.echo(f"{len(changed)} box maps updated; property types: {write_obsidian_types(v)}")
+    where = render_where(v)
+    maps = render_box_maps(v)
+    typer.echo(f"{len(where)} location lines and {len(maps)} box maps updated.")
+    typer.echo(f"Property types: {write_obsidian_types(v)}")
 
 
 @cli.command()

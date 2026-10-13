@@ -8,6 +8,10 @@ cols: 9
 ---
 # Series A 2 box
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer B -20]] › [[Freezer B -20, shelf 1|shelf 1]] › [[Freezer B -20, shelf 1, rack 1|rack 1]]
+<!-- labbase:where end -->
+
 <!-- labbase:box-map start -->
 
 **Box map** (6 of 81 positions used)

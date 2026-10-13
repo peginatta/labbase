@@ -5,6 +5,7 @@ note is left untouched.
 """
 
 import json
+import re
 from pathlib import Path
 
 from labbase.vault import positions
@@ -13,6 +14,8 @@ from labbase.vault.model import Note, Vault
 from labbase.vault.reader import split_frontmatter
 
 START, END = "<!-- labbase:box-map start -->", "<!-- labbase:box-map end -->"
+WHERE_START, WHERE_END = "<!-- labbase:where start -->", "<!-- labbase:where end -->"
+PLACE_TYPES = ("location", "box")
 
 OBSIDIAN_TYPES = {
     "date": "date",
@@ -73,15 +76,27 @@ def box_map(vault: Vault, box: Note) -> str:
     return "\n".join(lines)
 
 
-def replace_block(body: str, block: str) -> str:
-    if START in body and END in body:
-        before, rest = body.split(START, 1)
-        _old, after = rest.split(END, 1)
+def replace_marked(body: str, start: str, end: str, block: str | None) -> str:
+    """Replace the text between markers (inclusive) with `block`; insert it under the title
+    if absent; remove it when `block` is None."""
+    if start in body and end in body:
+        before, rest = body.split(start, 1)
+        _old, after = rest.split(end, 1)
+        if block is None:
+            return before.rstrip("\n") + "\n" + after.lstrip("\n")
         return before + block + after
+    if block is None:
+        return body
     lines = body.split("\n")
     insert_at = next((i + 1 for i, line in enumerate(lines) if line.startswith("# ")), 0)
-    lines[insert_at:insert_at] = ["", block, ""]
+    after_blank = insert_at < len(lines) and lines[insert_at].strip() == ""
+    new = (["", block] if insert_at else [block]) + ([] if after_blank else [""])
+    lines[insert_at:insert_at] = new
     return "\n".join(lines)
+
+
+def replace_block(body: str, block: str) -> str:
+    return replace_marked(body, START, END, block)
 
 
 def render_box_maps(vault: Vault) -> list[Path]:
@@ -94,6 +109,76 @@ def render_box_maps(vault: Vault) -> list[Path]:
         if new != text:
             box.path.write_text(new, encoding="utf-8")
             changed.append(box.path)
+    return changed
+
+
+def place_of(vault: Vault, note: Note) -> tuple[Note | None, str]:
+    """(the location/box this note is in, position text) — one step up the chain."""
+    p = note.props
+    if note.type in PLACE_TYPES:
+        return vault.resolve(p.get("parent")), ""
+    if note.type == "stock":
+        box = vault.resolve(p.get("box"))
+        if box is not None:
+            raw = p.get("positions") if isinstance(p.get("positions"), list) else []
+            pos = [positions.normalize(str(x)) for x in raw if x not in (None, "")]
+            return box, ", ".join(x for x in pos if x)
+        return vault.resolve(p.get("location")), ""
+    place = vault.resolve(p.get("location"))
+    pos = positions.normalize(str(p.get("position"))) if p.get("position") else None
+    return place, pos or ""
+
+
+def chain(vault: Vault, place: Note) -> list[Note]:
+    """Places from the top (room) down to `place`."""
+    nodes: list[Note] = []
+    node: Note | None = place
+    while node is not None and node.type in PLACE_TYPES and node not in nodes and len(nodes) < 20:
+        nodes.append(node)
+        node = place_of(vault, node)[0]
+    return list(reversed(nodes))
+
+
+def short_name(child: Note, parent: Note | None) -> str:
+    """'Lab 3260 -20 horizontal, tower Leishmania I' under 'Lab 3260 -20 horizontal'
+    -> 'tower Leishmania I'."""
+    if parent is not None and child.name.lower().startswith(parent.name.lower()):
+        rest = re.sub(r"^[\s,]+(?:[–—]\s+)?", "", child.name[len(parent.name) :]).strip()
+        if rest:
+            return rest
+    return child.name
+
+
+def where_block(vault: Vault, note: Note) -> str | None:
+    place, pos = place_of(vault, note)
+    if place is None or place.type not in PLACE_TYPES:
+        return None
+    parts, prev = [], None
+    for n in chain(vault, place):
+        label = short_name(n, prev)
+        parts.append(f"[[{n.name}]]" if label == n.name else f"[[{n.name}|{label}]]")
+        prev = n
+    if pos:
+        parts.append(f"**{pos}**")
+    return f"{WHERE_START}\n📍 " + " › ".join(parts) + f"\n{WHERE_END}"
+
+
+def render_where(vault: Vault) -> list[Path]:
+    """Write the full location line (📍 room › freezer › … › position) under each note's title."""
+    changed = []
+    for note in vault.notes:
+        if note.parse_error or not note.type:
+            continue
+        block = where_block(vault, note)
+        text = note.path.read_text(encoding="utf-8")
+        if block is None and WHERE_START not in text:
+            continue
+        _fm, body = split_frontmatter(text)
+        head = text[: len(text) - len(body)]
+        new = head + replace_marked(body, WHERE_START, WHERE_END, block)
+        if new != text:
+            note.path.write_text(new, encoding="utf-8")
+            changed.append(note.path)
     return changed
 
 

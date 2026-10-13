@@ -8,6 +8,10 @@ cols: 9
 ---
 # BMDM box
 
+<!-- labbase:where start -->
+📍 [[Lab]] › [[Freezer B -80]] › [[Freezer B -80, shelf 1|shelf 1]] › [[Freezer B -80, shelf 1, rack 1|rack 1]]
+<!-- labbase:where end -->
+
 <!-- labbase:box-map start -->
 
 **Box map** (4 of 81 positions used)
