@@ -1,6 +1,8 @@
 ---
 id:
 type: item
+aliases:
+tags:
 category:
 supplier:
 catalog_no:

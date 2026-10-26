@@ -23,7 +23,7 @@ def _yaml_value(value: object) -> str:
 
 def template_text(schema: Schema, created: str = '"{{date}}"', title: str = "{{title}}") -> str:
     """Frontmatter listing every property of the type (empty unless it has a default)."""
-    lines = ["---", "id:", f"type: {schema.type}"]
+    lines = ["---", "id:", f"type: {schema.type}", "aliases:", "tags:"]
     for name, f in schema.fields.items():
         value = _yaml_value(f.default)
         lines.append(f"{name}: {value}".rstrip())

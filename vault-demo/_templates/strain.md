@@ -1,6 +1,8 @@
 ---
 id:
 type: strain
+aliases:
+tags:
 species:
 ncbi_taxon:
 who_code:

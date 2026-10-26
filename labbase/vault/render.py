@@ -16,6 +16,12 @@ from labbase.vault.writer import scalar
 
 START, END = "<!-- labbase:box-map start -->", "<!-- labbase:box-map end -->"
 WHERE_START, WHERE_END = "<!-- labbase:where start -->", "<!-- labbase:where end -->"
+USAGE_START, USAGE_END = "<!-- labbase:usage start -->", "<!-- labbase:usage end -->"
+CHANGE_FIELD = re.compile(r"(?i)\b(change|cambio)::")
+CHANGE_WORDS = re.compile(
+    r"(?i)\b(chang\w*|cambi\w*|modif\w*|instead|en vez|en lugar|increas\w*|decreas\w*|"
+    r"aument\w*|reduc\w*|better|mejor|problem\w*|didn.t work|no funcion\w*|failed)\b"
+)
 PLACE_TYPES = ("location", "box")
 
 OBSIDIAN_TYPES = {
@@ -240,6 +246,59 @@ def render_where(vault: Vault) -> list[Path]:
             new = head + replace_marked(body, WHERE_START, WHERE_END, block)
         if note.props.get("where") != value:
             new = set_property_line(new, "where", value)
+        if new != text:
+            note.path.write_text(new, encoding="utf-8")
+            changed.append(note.path)
+    return changed
+
+
+def _date_of(note: Note) -> str:
+    from labbase.vault.validate import as_date
+
+    d = as_date(note.props.get("date"))
+    if d is not None:
+        return d.isoformat()
+    m = re.match(r"(\d{4}-\d{2}-\d{2})", note.name)
+    return m.group(1) if m else ""
+
+
+def usage_block(vault: Vault, protocol: Note) -> str:
+    """Notebook entries linking to `protocol`: newest first, the line around each link,
+    ⚠️ when the line proposes a change (`change::` / `cambio::` or words like "instead")."""
+    link_re = re.compile(rf"\[\[{re.escape(protocol.name)}(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]", re.I)
+    rows: list[tuple[str, str, str]] = []
+    for note in vault.notes:
+        if note.type != "note" or note is protocol:
+            continue
+        for line in note.path.read_text(encoding="utf-8").splitlines():
+            if not link_re.search(line):
+                continue
+            text = re.sub(r"^\s*(?:[-*+]|\d+\.)\s+", "", line).strip()
+            text = text if len(text) <= 200 else text[:199] + "…"
+            flag = " ⚠️" if CHANGE_FIELD.search(line) or CHANGE_WORDS.search(line) else ""
+            rows.append((_date_of(note), note.name, f"{text}{flag}"))
+    rows.sort(key=lambda r: (r[0], r[1]), reverse=True)
+    lines = [USAGE_START]
+    if rows:
+        lines += [f"- {d or 'undated'} · [[{name}]] — {text}" for d, name, text in rows]
+    else:
+        lines.append("*Not used in any notebook entry yet.*")
+    lines.append(USAGE_END)
+    return "\n".join(lines)
+
+
+def render_usage(vault: Vault) -> list[Path]:
+    """Keep the usage log of every protocol up to date (replaces the Dataview view)."""
+    changed = []
+    for note in (n for n in vault.notes if n.type == "protocol" and not n.parse_error):
+        text = note.path.read_text(encoding="utf-8")
+        block = usage_block(vault, note)
+        if USAGE_START in text and USAGE_END in text:
+            before, rest = text.split(USAGE_START, 1)
+            after = rest.split(USAGE_END, 1)[1]
+            new = before + block + after
+        else:
+            new = text.rstrip("\n") + "\n\n## Usage log\n\n" + block + "\n"
         if new != text:
             note.path.write_text(new, encoding="utf-8")
             changed.append(note.path)

@@ -1,6 +1,8 @@
 ---
 id:
 type: stock
+aliases:
+tags:
 content:
 box:
 location:

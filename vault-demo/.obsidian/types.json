@@ -107,6 +107,16 @@
     "specificity": "text",
     "position": "text",
     "where": "text",
-    "label": "text"
+    "label": "text",
+    "duration": "text",
+    "version": "text",
+    "updated": "date",
+    "sources": "multitext",
+    "related": "multitext",
+    "citekey": "text",
+    "citation": "text",
+    "doi": "text",
+    "url": "text",
+    "zotero": "text"
   }
 }

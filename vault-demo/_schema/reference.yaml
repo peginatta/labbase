@@ -1,0 +1,24 @@
+type: reference
+id_prefix: REF
+folder: References
+description: >
+  A source a protocol or note is based on (paper, lab protocol, product sheet). File name is
+  `@citekey`, so links look like [[@luuComprehensiveProtocolCollection2024]].
+fields:
+  citekey:
+    kind: text
+    required: true
+    help: Better BibTeX citation key, as in Paolo's Zotero library.
+  citation:
+    kind: text
+    help: Full formatted citation (APA).
+  kind:
+    kind: choice
+    options: [article, lab protocol, product sheet, book, web page, other]
+  doi:
+    kind: text
+  url:
+    kind: text
+  zotero:
+    kind: text
+    help: zotero:// link (opens the item in Paolo's Zotero library).

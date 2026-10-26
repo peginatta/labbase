@@ -1,6 +1,8 @@
 ---
 id:
 type: supplier
+aliases:
+tags:
 website:
 contact:
 created: "{{date}}"

@@ -1,6 +1,8 @@
 ---
 id:
 type: media_recipe
+aliases:
+tags:
 base:
 components:
 shelf_life_days:

@@ -1,6 +1,8 @@
 ---
 id:
 type: cell_line
+aliases:
+tags:
 species:
 ncbi_taxon:
 kind:

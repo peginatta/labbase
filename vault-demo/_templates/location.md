@@ -1,6 +1,8 @@
 ---
 id:
 type: location
+aliases:
+tags:
 kind:
 parent:
 slot:

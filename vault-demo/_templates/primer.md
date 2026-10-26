@@ -1,6 +1,8 @@
 ---
 id:
 type: primer
+aliases:
+tags:
 code:
 sequence:
 length_nt:

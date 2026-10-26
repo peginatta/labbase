@@ -79,7 +79,12 @@ def templates_cmd(vault: str = typer.Argument(".", help="Path to the vault folde
 def render(vault: str = typer.Argument(".", help="Path to the vault folder")) -> None:
     """Update generated content: locations (`where` + 📍), box maps, canvases, property types."""
     from labbase.vault.reader import load_vault
-    from labbase.vault.render import render_box_maps, render_where, write_obsidian_types
+    from labbase.vault.render import (
+        render_box_maps,
+        render_usage,
+        render_where,
+        write_obsidian_types,
+    )
 
     v = load_vault(vault)
     from labbase.vault.canvas import render_canvases
@@ -87,9 +92,10 @@ def render(vault: str = typer.Argument(".", help="Path to the vault folder")) ->
     where = render_where(v)
     maps = render_box_maps(v)
     canvases = render_canvases(load_vault(vault))
+    usage = render_usage(load_vault(vault))
     typer.echo(
-        f"{len(where)} location properties/lines, {len(maps)} box maps and "
-        f"{len(canvases)} canvases updated."
+        f"{len(where)} location properties/lines, {len(maps)} box maps, "
+        f"{len(canvases)} canvases and {len(usage)} protocol usage logs updated."
     )
     typer.echo(f"Property types: {write_obsidian_types(v)}")
 

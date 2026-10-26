@@ -1,6 +1,8 @@
 ---
 id:
 type: note
+aliases:
+tags:
 date:
 author:
 status: draft

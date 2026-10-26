@@ -1,6 +1,8 @@
 ---
 id:
 type: box
+aliases:
+tags:
 label:
 parent:
 slot:

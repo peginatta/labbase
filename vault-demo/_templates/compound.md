@@ -1,6 +1,8 @@
 ---
 id:
 type: compound
+aliases:
+tags:
 code:
 series:
 reference:

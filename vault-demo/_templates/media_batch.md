@@ -1,6 +1,8 @@
 ---
 id:
 type: media_batch
+aliases:
+tags:
 recipe:
 prepared_on:
 prepared_by:
