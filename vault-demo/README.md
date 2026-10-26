@@ -30,6 +30,10 @@ read with Obsidian, any text editor, or a script — today and in 20 years. Noth
 | `Items/` | `item` | bought reagent/consumable (DMEM, PBS, FBS…) |
 | `Suppliers/` | `supplier` | company or collaborator |
 | `Notebook/` | `note` | experiment / observation / plan |
+| `Protocols/` | `protocol` | lab protocol (numbered steps, sources, lab modifications; usage log generated) |
+| `References/` | `reference` | source a protocol is based on, named `@citekey` (citation, DOI, Zotero link) |
+| `Boards/` | canvas | your own canvases (project or experiment boards) — the tool never touches them |
+| `_maps/` | canvas | generated lab map and freezer canvases — don't edit |
 
 **"What it is" vs "the tubes":** `[[THP-1]]` (a `cell_line` note) describes the cells once.
 Each freezing — "THP-1 p8, frozen 2026-01-15 by Marc, 5 vials in box *THP-1*, positions A1–A5" —
