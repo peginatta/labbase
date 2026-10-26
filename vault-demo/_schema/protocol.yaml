@@ -36,6 +36,9 @@ fields:
   duration:
     kind: text
     help: e.g. "~1.5 h extraction · 6 days differentiation"
+  flask:
+    kind: text
+    help: Culture vessel the volumes are scaled to (e.g. T175), when it matters.
   version:
     kind: text
     help: Bump when the procedure changes (1.0, 1.1, 2.0…).
